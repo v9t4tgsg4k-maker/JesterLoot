@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JesterLoot</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#100d1c;color:white;font-family:Arial,sans-serif;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:900;color:#bd8aff}
+.tag{background:#261b3c;padding:9px 13px;border-radius:20px;color:#d6b5ff}
+h1{font-size:30px;margin-top:35px}
+p{color:#aaa}
+.balance{margin-top:22px;padding:24px;border-radius:22px;background:linear-gradient(130deg,#713bd1,#321b69)}
+.balance small{color:#e3d5ff}
+.money{font-size:34px;font-weight:bold;margin:12px 0}
+button{border:0;border-radius:13px;padding:13px 17px;background:#b77cff;color:#170d25;font-weight:bold}
+h2{margin-top:30px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.item{background:#201a30;padding:19px;border:1px solid #382a50;border-radius:17px}
+.item b{display:block;margin:10px 0}
+.item span{color:#aaa;font-size:13px}
+footer{display:flex;justify-content:space-around;margin-top:30px;padding:17px;background:#211a30;border-radius:18px;color:#cdaaff}
+</style>
+</head>
+<body>
+<header><div class="logo">♛ JesterLoot</div><div class="tag">DEMO</div></header>
+<h1>Привет, игрок! 👋</h1>
+<p>Твой мир бонусов начинается здесь.</p>
+<div class="balance">
+<small>ТВОЙ ИГРОВОЙ БАЛАНС</small>
+<div class="money" id="coins">1 250 JL</div>
+<button onclick="alert('Это демонстрация: вывод пока недоступен')">Мой профиль →</button>
+</div>
+<h2>🎮 Игры и задания</h2>
+<div class="grid">
+<div class="item">🎯<b>Ежедневный бонус</b><span>Заходи каждый день</span><br><br><button onclick="bonus()">Получить +50</button></div>
+<div class="item">🎲<b>Мини-игры</b><span>Играй и развлекайся</span><br><br><button onclick="alert('Скоро появится!')">Играть</button></div>
+<div class="item">🏆<b>Турниры</b><span>Соревнования игроков</span><br><br><button onclick="alert('Скоро появится!')">Открыть</button></div>
+<div class="item">👥<b>Пригласи друга</b><span>Бонусы за друзей</span><br><br><button onclick="alert('Реферальная система скоро появится!')">Пригласить</button></div>
+</div>
+<footer><span>🏠 Главная</span><span>🎮 Игры</span><span>👤 Профиль</span></footer>
+<script>
+let balance=1250;
+function bonus(){
+balance+=50;
+document.getElementById('coins').textContent=balance.toLocaleString('ru-RU')+' JL';
+alert('Получено 50 игровых JL!');
+}
+</script>
+</body>
+</html>
