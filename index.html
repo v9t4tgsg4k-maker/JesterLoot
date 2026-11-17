@@ -164,7 +164,7 @@ function openProfile() {
   profile.querySelector("#profileName").textContent =
     user.first_name || "Игрок";
 const avatar = profile.querySelector("#profileAvatar");
-
+alert(user.photo_url ? "Telegram передал фото!" : "Telegram не передал фото");
 if (user.photo_url) {
   avatar.src = user.photo_url;
 } else {
