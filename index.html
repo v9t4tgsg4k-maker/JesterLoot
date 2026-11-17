@@ -65,7 +65,10 @@ if (tg && tg.initData) {
   })
   .then(response => response.json())
   .then(data => {
-    if (!data.ok) throw new Error("Авторизация не пройдена");
+   if (!data.ok) {
+  alert("Ошибка сервера: " + (data.error || "неизвестная ошибка"));
+  return;
+}
 
     balance = data.user.balance;
     serverReady = true;
