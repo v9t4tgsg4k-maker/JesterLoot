@@ -43,6 +43,7 @@ footer{display:flex;justify-content:space-around;margin-top:30px;padding:17px;ba
 <footer><span>🏠 Главная</span><span>🎮 Игры</span><span>👤 Профиль</span></footer>
 <script>
 let balance = Number(localStorage.getItem('jesterloot_balance')) || 1250;
+document.getElementById('coins').textContent = balance.toLocaleString('ru-RU') + ' JL';
 function bonus(){
 balance+=50;
 localStorage.setItem('jesterloot_balance', balance);
