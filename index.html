@@ -41,14 +41,85 @@ footer{display:flex;justify-content:space-around;margin-top:30px;padding:17px;ba
 <div class="item">👥<b>Пригласи друга</b><span>Бонусы за друзей</span><br><br><button onclick="alert('Реферальная система скоро появится!')">Пригласить</button></div>
 </div>
 <footer><span>🏠 Главная</span><span>🎮 Игры</span><span>👤 Профиль</span></footer>
+
 <script>
-let balance = Number(localStorage.getItem('jesterloot_balance')) || 1250;
-document.getElementById('coins').textContent = balance.toLocaleString('ru-RU') + ' JL';
-function bonus(){
-balance+=50;
-localStorage.setItem('jesterloot_balance', balance);
-document.getElementById('coins').textContent=balance.toLocaleString('ru-RU')+' JL';
-alert('Получено 50 игровых JL!');
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+const API = "https://jesterloot-api.workers.dev";
+
+let balance = 1250;
+let telegramData = "";
+let serverReady = false;
+
+const coins = document.getElementById("coins");
+const tg = window.Telegram?.WebApp;
+
+if (tg && tg.initData) {
+  tg.ready();
+  tg.expand();
+
+  telegramData = tg.initData;
+
+  fetch(API + "/auth", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ initData: telegramData })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (!data.ok) throw new Error("Авторизация не пройдена");
+
+    balance = data.user.balance;
+    serverReady = true;
+    coins.textContent = balance.toLocaleString("ru-RU") + " JL";
+  })
+  .catch(() => {
+    alert("Не удалось подключиться к серверу. Попробуй открыть приложение ещё раз.");
+  });
+
+} else {
+  balance = Number(localStorage.getItem("jesterloot_balance")) || 1250;
+  coins.textContent = balance.toLocaleString("ru-RU") + " JL";
+}
+
+async function bonus() {
+  if (tg && tg.initData) {
+    if (!serverReady) {
+      alert("Подожди загрузки профиля.");
+      return;
+    }
+
+    try {
+      const response = await fetch(API + "/bonus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ initData: telegramData })
+      });
+
+      const data = await response.json();
+
+      if (!data.ok) {
+        alert("Не удалось получить бонус.");
+        return;
+      }
+
+      balance = data.user.balance;
+      coins.textContent = balance.toLocaleString("ru-RU") + " JL";
+
+      if (data.already_claimed) {
+        alert("Ты уже получил сегодняшний бонус!");
+      } else {
+        alert("Получено 50 игровых JL!");
+      }
+    } catch (error) {
+      alert("Ошибка соединения с сервером.");
+    }
+
+  } else {
+    balance += 50;
+    localStorage.setItem("jesterloot_balance", balance);
+    coins.textContent = balance.toLocaleString("ru-RU") + " JL";
+    alert("Получено 50 демонстрационных JL!");
+  }
 }
 </script>
 </body>
