@@ -42,9 +42,10 @@ footer{display:flex;justify-content:space-around;margin-top:30px;padding:17px;ba
 </div>
 <footer><span>🏠 Главная</span><span>🎮 Игры</span><span>👤 Профиль</span></footer>
 <script>
-let balance=1250;
+let balance = Number(localStorage.getItem('jesterloot_balance')) || 1250;
 function bonus(){
 balance+=50;
+localStorage.setItem('jesterloot_balance', balance);
 document.getElementById('coins').textContent=balance.toLocaleString('ru-RU')+' JL';
 alert('Получено 50 игровых JL!');
 }
