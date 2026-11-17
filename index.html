@@ -163,7 +163,13 @@ function openProfile() {
 
   profile.querySelector("#profileName").textContent =
     user.first_name || "Игрок";
+const avatar = profile.querySelector("#profileAvatar");
 
+if (user.photo_url) {
+  avatar.src = user.photo_url;
+} else {
+  avatar.style.display = "none";
+}
   profile.querySelector("#profileUsername").textContent =
     user.username ? "@" + user.username : "Без имени пользователя";
 
