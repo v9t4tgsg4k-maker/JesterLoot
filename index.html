@@ -74,9 +74,9 @@ if (tg && tg.initData) {
     serverReady = true;
     coins.textContent = balance.toLocaleString("ru-RU") + " JL";
   })
-  .catch(() => {
-    alert("Не удалось подключиться к серверу. Попробуй открыть приложение ещё раз.");
-  });
+ .catch((error) => {
+  alert("Ошибка подключения: " + error.message);
+});
 
 } else {
   balance = Number(localStorage.getItem("jesterloot_balance")) || 1250;
